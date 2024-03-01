@@ -7,17 +7,6 @@ import tkinter as tk
 from tkinter import ttk, Label, Tk, font as tkFont, filedialog, scrolledtext
 import datetime
 import tkinter.font as tkFont
-import sys
-import os
-
-'''
-def resource_path(relative_path):
-    try:
-        base_path = sys._MEIPASS
-    except Exception:
-        base_path = os.path.abspath(".")
-    return os.path.join(base_path, relative_path)
-'''
 
 class LikeBot:
     def __init__(self):
@@ -124,10 +113,10 @@ class GUI:
             self.master.after(0, lambda: self.logMessage("Finished rating.", True))
 
     def prepare_window(self):
-        self.master.grid_rowconfigure(0, weight=1)  # The row with the notebook will expand
-        self.master.grid_rowconfigure(1, weight=0)  # The row with the progress bar will not expand
-        self.master.grid_columnconfigure(0, weight=1)  # The column with the notebook will expand
-        self.master.grid_columnconfigure(1, weight=1)  # The second column will also expand
+        self.master.grid_rowconfigure(0, weight=1)
+        self.master.grid_rowconfigure(1, weight=0)
+        self.master.grid_columnconfigure(0, weight=1)
+        self.master.grid_columnconfigure(1, weight=1) 
 
     def create_tabs(self):
         notebook_size = (self.master.winfo_screenwidth() // 4, self.master.winfo_screenheight() // 2)
@@ -277,8 +266,8 @@ class GUI:
             self.current_username = username
 
             if self.last_username and self.current_username != self.last_username:
-                self.page_number = 0 # reset page
-                self.comments == "" # clear old comments
+                self.page_number = 0
+                self.comments == "" 
                 self.canLike = False
 
             self.logMessage(f"Loading account comments for username: {username}.", True)
@@ -434,7 +423,7 @@ class GUI:
         elif self.like_type_combobox.get() == "Account Comment":
             self.likeType = "3"
             self.itemID = ""
-            comment_text = self.comment_entry.get()  # Get text from the comment entry
+            comment_text = self.comment_entry.get() # Get text from the comment entry
 
             if self.username_entry.get() != self.current_username:
                 self.comments = ""
