@@ -86,8 +86,7 @@ class GUI:
 
     def create_progress_bar(self):
         self.progress_frame = ttk.Frame(self.master)
-        # Place the progress bar frame in the last row and make it span across all columns
-        self.progress_frame.grid(row=1, column=0, columnspan=2, sticky="ew", padx=5)  # Span across both columns
+        self.progress_frame.grid(row=1, column=0, columnspan=2, sticky="ew", padx=5)
 
         self.progress_bar = ttk.Progressbar(self.progress_frame, orient='horizontal', length=100, mode='determinate')
         self.progress_bar.grid(row=0, column=0, sticky="ew")
@@ -97,7 +96,6 @@ class GUI:
         self.progress_label = Label(self.progress_frame, text="0/{}".format(self.total_accounts))
         self.progress_label.place(relx=0.5, rely=0.5, anchor="center")
 
-        # Make sure the progress bar expands only horizontally within its frame
         self.progress_frame.grid_columnconfigure(0, weight=1)
 
     def update_progress_bar(self, value):
@@ -712,7 +710,7 @@ class ThreadManager:
     def rateThread(self, postData, proxy, account):
         try:
             #response = requests.post(NetworkOperations.baseURL+NetworkOperations.rateURL, proxies={"http": "http://" + proxy, "https" : "https://" + proxy}, data=postData, timeout=5, headers={"User-Agent": ""})
-            response = requests.post(NetworkOperations.baseURL+NetworkOperations.rateURL, proxies={"http": "http://" + proxy}, data=postData, timeout=10, headers={"User-Agent": ""})
+            response = requests.post(NetworkOperations.baseURL+NetworkOperations.rateURL, proxies={"http": "http://" + proxy}, data=postData, timeout=7, headers={"User-Agent": ""})
 
             if response.text == "1":
                 self.gui.master.after(0, lambda: [self.gui.update_log("Sent on " + account[0] + ". P: " + proxy, True), self.gui.update_progress_bar(1)])
@@ -727,7 +725,7 @@ class ThreadManager:
     def likeThread(self, postData, proxy, account):
         try:
             #response = requests.post(NetworkOperations.baseURL+NetworkOperations.likeURL, proxies={"http": "http://" + proxy, "https" : "https://" + proxy}, data=postData, timeout=5, headers={"User-Agent": ""})
-            response = requests.post(NetworkOperations.baseURL+NetworkOperations.likeURL, proxies={"http": "http://" + proxy}, data=postData, timeout=10, headers={"User-Agent": ""})
+            response = requests.post(NetworkOperations.baseURL+NetworkOperations.likeURL, proxies={"http": "http://" + proxy}, data=postData, timeout=7, headers={"User-Agent": ""})
             if response.text == "1":
                 self.gui.master.after(0, lambda: [self.gui.update_log("Sent on " + account[0] + ". P: " + proxy, True), self.gui.update_progress_bar(1)])
             else:
@@ -739,7 +737,7 @@ class ThreadManager:
             self.retryLogin(postData, account, 1)
 
     def retryLogin(self, postData, account, likeOrRate):
-        with self.lock:  # Ensure that only one thread can execute this block at a time
+        with self.lock:
             if not self.proxies and not self.outOfProxies:
                 self.gui.master.after(0, lambda: self.gui.update_log("WARNING: Ran out of proxies, post consistency WILL drop!", True))
                 self.proxies = NetworkOperations.getProxies()
@@ -747,7 +745,7 @@ class ThreadManager:
             elif self.proxies:
                 self.outOfProxies = False
 
-        if self.proxies:  # Check again after acquiring proxies
+        if self.proxies:
             proxy = self.proxies.pop()
             if likeOrRate == 1:
                 thread = threading.Thread(target=self.likeThread, args=(postData, proxy, account))
