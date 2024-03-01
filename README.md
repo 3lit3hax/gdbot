@@ -2,6 +2,10 @@ Hey!
 
 This is one of my first projects, so the code is probably not gonna be the best, and there will be bunch of bugs, however, I am trying to get better at programming.
 
+What it does:
+- Loads Geometry Dash accounts from a text file, and uses them to like/dislike user levels/comments/profiles.
+- Uses accounts to send demon rates to potentially influence demon level ratings.
+
 Requirements:
 - Python (latest version, others untested)
 - Packages: tkinter and requests
