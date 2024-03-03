@@ -154,8 +154,15 @@ class GUI:
         self.dynamic_frame = ttk.Frame(tab)
         self.dynamic_frame.pack(side="top", fill="both", expand=True)
         
-        self.like_button = tk.Button(tab, text="Start", command=self.like_action)
-        self.like_button.pack(side="bottom", fill="x", pady=5)
+        like_button_frame = tk.Frame(tab)
+        like_button_frame.pack(side="bottom", fill="x", pady=5)
+
+        self.like_button = tk.Button(like_button_frame, text="Start", command=self.like_action)
+        self.like_button.pack(side="left", fill="x", expand=True, pady=5)
+
+        self.stop_button = tk.Button(like_button_frame, text="Stop", command=self.stop_action)
+        self.stop_button.pack(side="left", fill="x", expand=True, pady=5)
+
 
     def setup_rate_tab(self, tab):
         self.load_accounts_button = tk.Button(tab, text="Load Accounts (.txt)", command=self.load_accounts)
@@ -184,8 +191,17 @@ class GUI:
             rb = tk.Radiobutton(tab, text=difficulty, variable=self.rating_var, value=value, anchor='w')
             rb.pack(side="top", fill="x", pady=2)
 
-        self.rate_start_button = tk.Button(tab, text="Start", command=self.rate_action)
-        self.rate_start_button.pack(side="bottom", fill="x", pady=5)
+        rate_button_frame = tk.Frame(tab)
+        rate_button_frame.pack(side="bottom", fill="x", pady=5)
+
+        self.rate_start_button = tk.Button(rate_button_frame, text="Start", command=self.rate_action)
+        self.rate_start_button.pack(side="left", fill="x", expand=True, pady=5)
+
+        self.rate_stop_button = tk.Button(rate_button_frame, text="Stop", command=self.stop_action)
+        self.rate_stop_button.pack(side="left", fill="x", expand=True, pady=5)
+
+    def stop_action(self):
+        self.logMessage("This button does nothing yet LMAO", True)
 
     def rate_action(self):
         level_id = self.level_id_entry.get()
