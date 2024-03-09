@@ -11,7 +11,7 @@ Requirements:
 - Packages: tkinter and requests
 
 You can run:
-"pip install tkinter, requests"
+"pip install tkinter, 'requests[socks]'"
 if you would like to install the requirements
 
 In order to make the bot work, you need real player accounts, and they must be placed in a text file.
