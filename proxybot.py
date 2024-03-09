@@ -1,11 +1,5 @@
-import requests
-import base64
-import hashlib
-import random
-import threading
-import tkinter as tk
-from tkinter import ttk, Label, Tk, font as tkFont, filedialog, scrolledtext
-import datetime
+import requests, base64, hashlib, random, threading, tkinter as tk, datetime
+from tkinter import ttk, Label, font as tkFont, filedialog, scrolledtext
 import tkinter.font as tkFont
 
 class LikeBot:
@@ -26,7 +20,6 @@ class LikeBot:
 
     def run(self):
         self.root.mainloop()
-        
 
 class NetworkHandler:
     def __init__(self, gui):
@@ -532,15 +525,15 @@ class NetworkOperations:
     def getProxies():
         proxyscrapev2url = "https://api.proxyscrape.com/v2/?request=displayproxies&protocol=http&timeout=10000&country=all&ssl=all&anonymity=all" # Good fast proxies
         proxyscrapev1url = "https://api.proxyscrape.com/?request=displayproxies&protocol=http&timeout=10000&country=all&ssl=all&anonymity=all" # Good fast proxies
-        alexaurl = "https://alexa.lr2b.com/proxylist.txt" # Slow inconsistent proxies
-        multiproxyurl = "https://multiproxy.org/txt_all/proxy.txt" # Slow inconsistent proxies
+        #alexaurl = "https://alexa.lr2b.com/proxylist.txt" # Slow inconsistent proxies
+        #multiproxyurl = "https://multiproxy.org/txt_all/proxy.txt" # Slow inconsistent proxies
         remove = ':80'
         proxies = []
 
         proxies += requests.get(proxyscrapev2url).text.splitlines()
         proxies += requests.get(proxyscrapev1url).text.splitlines()
-        proxies += requests.get(alexaurl).text.splitlines()
-        proxies += requests.get(multiproxyurl).text.splitlines()
+        #proxies += requests.get(alexaurl).text.splitlines()
+        #proxies += requests.get(multiproxyurl).text.splitlines()
         proxies = list(set(proxies)) # Convert to set to remove duplicate proxies
         proxies = [proxy for proxy in proxies if not proxy.endswith(remove)]
         random.shuffle(proxies)
